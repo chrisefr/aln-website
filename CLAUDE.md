@@ -22,20 +22,22 @@ Note: two image files originally had uppercase `.JPG` extensions while `index.ht
 - Teal (accent/links): #3fc7c2
 - Gold (buttons): #b98e56
 - Ink (body headings): #16324a
+- Sand (alternate section background, `iteration/freereign` on): #f3e9da
 
 ## Page structure (top to bottom)
-1. Hero image (full-width photo)
-2. Hero banner (dark navy, title + subtitle + date)
-3. Sticky navigation bar (ALN Vision / African Landscape Convention / Individuals & Entities Map / Projects Map / Credits)
-4. Intro text + two CTA buttons (Individuals & Entities Map / Projects Map)
-5. Image carousel (10 landscape photos, 3 visible at a time, prev/next + dot navigation)
-6. ALN Vision section (diagram + text, two-column)
-7. African Landscape Convention section (book cover + text, two-column)
-8. Individuals & Entities Map section (text + buttons + map screenshot)
-9. Projects Map section (text + buttons + map screenshot)
-10. Filters section (6 filter categories, each with image pairs and explanatory text)
-11. Credits section (table of organisations + disclaimer)
-12. Footer
+1. Hero — full-bleed photo with a dark gradient overlay and the title/subtitle/date positioned over the bottom of the image (single `.hero` block, not a separate banner)
+2. Sticky navigation bar (ALN Vision / African Landscape Convention / Individuals & Entities Map / Projects Map / Credits) — highlights the section currently in view (scrollspy)
+3. Intro text + two CTA buttons (Individuals & Entities Map / Projects Map)
+4. Image carousel (10 landscape photos, 2 visible at a time on desktop, prev/next + dot navigation, hover caption from each image's alt text)
+5. ALN Vision section (diagram + text, two-column)
+6. African Landscape Convention section (book cover + text, two-column)
+7. Individuals & Entities Map section (text + buttons + live ArcGIS map embed)
+8. Projects Map section (text + buttons + live ArcGIS map embed)
+9. Filters section (6 filter categories, each with image pairs and explanatory text)
+10. Credits section (table of organisations + disclaimer)
+11. Footer
+
+Sections alternate between the paper (`--paper`) and sand (`--sand`) backgrounds for visual rhythm, and each carries a faint decorative section number (01–06) — this is styling only, no section content/copy was changed to add it.
 
 ## Images
 All images currently in the root folder alongside index.html.
