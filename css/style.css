@@ -12,7 +12,7 @@
   --sand:       #f3e9da;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body { margin:0; font-family:'Barlow',Arial,sans-serif; color:#333; background:var(--paper); line-height:1.55; }
 h1,h2,h3,.nav a,.btn { font-family:'Barlow Condensed',Arial,sans-serif; letter-spacing:.02em; }
 a { color:inherit; }
@@ -117,7 +117,7 @@ a { color:inherit; }
 @media(max-width:800px){ .two-col,.cover-col { grid-template-columns:1fr; } }
 
 /* ── Map embeds ── */
-.map-frame { margin-top:30px; border-radius:10px; overflow:hidden; border:1px solid var(--line); box-shadow:0 18px 40px rgba(14,42,63,.16); }
+.map-frame { width:100vw; margin-left:50%; transform:translateX(-50%); margin-top:30px; overflow:hidden; box-shadow:0 18px 40px rgba(14,42,63,.16); }
 .map-frame::before { content:''; display:block; height:30px; background:var(--navy); }
 .map-viewer { width:100%; display:block; border:0; }
 
