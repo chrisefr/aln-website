@@ -1,4 +1,8 @@
 [build]
+  # Regenerates individuals/, projects/, and sitemap.xml from ArcGIS on every
+  # deploy (see aln-static-generator/build.js - config.siteOutputDir points
+  # at the repo root), then publishes the repo root as before.
+  command = "cd aln-static-generator && npm install && node build.js"
   publish = "."
 
 [[headers]]

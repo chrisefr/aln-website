@@ -1,0 +1,16 @@
+{
+  "name": "aln-static-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Scaffold: generates static SEO pages for ALN individuals/projects from ArcGIS feature layers.",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "sharp": "^0.35.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
