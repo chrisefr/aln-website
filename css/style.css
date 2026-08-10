@@ -110,9 +110,9 @@ a { color:inherit; }
 }
 
 /* ── Two-column layouts ── */
-.two-col { display:grid; grid-template-columns:380px 1fr; gap:50px; align-items:start; }
-.two-col img { width:100%; aspect-ratio:4/5; object-fit:cover; display:block; box-shadow:0 14px 34px rgba(14,42,63,.14); }
-.cover-col { display:grid; grid-template-columns:320px 1fr; gap:50px; align-items:start; }
+.two-col { display:grid; grid-template-columns:360px 1fr; gap:50px; align-items:start; }
+.two-col img { width:100%; aspect-ratio:6/5; object-fit:contain; display:block; background:#f5f3ef; box-shadow:0 14px 34px rgba(14,42,63,.14); }
+.cover-col { display:grid; grid-template-columns:360px 1fr; gap:50px; align-items:start; }
 .cover-col img { width:100%; aspect-ratio:3/4; object-fit:contain; display:block; background:#f5f3ef; box-shadow:0 14px 34px rgba(14,42,63,.14); }
 @media(max-width:800px){ .two-col,.cover-col { grid-template-columns:1fr; } }
 
