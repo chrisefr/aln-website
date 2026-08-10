@@ -3,11 +3,10 @@
 const path = require('path');
 
 module.exports = {
-  // Base origin the sitemap's absolute URLs are built from. Domain not
-  // decided yet (per the site's own CLAUDE.md) - this placeholder makes the
-  // sitemap structurally correct today; swap in the real domain (custom or
-  // Netlify subdomain) before the actual deploy, then rebuild.
-  siteUrl: 'https://REPLACE-ME.example',
+  // Base origin the sitemap's absolute URLs are built from. Confirmed by
+  // the user 2026-08-10: production is the Netlify subdomain, no custom
+  // domain yet - update this if/when one gets configured, then rebuild.
+  siteUrl: 'https://aln-website.netlify.app',
 
   // Where generated pages/images/sitemap.xml land: directly in the repo
   // root (sibling of index.html, css/, images/), since that's the site
