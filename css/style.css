@@ -241,3 +241,68 @@ a { color:inherit; }
 .footer-col a:hover { color:var(--teal); }
 .footer-orgs { font-size:13px; color:#5c6f79; margin:16px 0 0; }
 .site-footer-bottom { max-width:1280px; margin:0 auto; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); text-align:center; font-size:13px; }
+
+/* ══════════════════════════════════════════════════════════════
+   Individual entry template (Claude Design import: Individual.dc.html,
+   project fdb15054-19cf-432e-b9f1-acd5267d2613). Detail page for one
+   Individuals & Entities record - see aln-static-generator's
+   renderIndividualPage(). Every .detail-card section is conditional on
+   the record actually having that data.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Hero head block: eyebrow / name / role, on flex+gap so the rhythm
+   holds together instead of leaning on per-child margins. */
+.entry-head { display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
+.entry-photo { width:180px; height:180px; border-radius:50%; flex-shrink:0; overflow:hidden; border:4px solid rgba(255,255,255,.14); box-shadow:0 10px 28px rgba(0,0,0,.25); }
+.entry-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+/* Initials avatar - the "no photo supplied" state. Reusable anywhere a
+   person's photo is optional (e.g. future Individuals & Entities list
+   cards), not just here. */
+.entry-avatar { width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(160deg,var(--navy),var(--navy-deep)); color:var(--sand); font-family:'Newsreader',Georgia,serif; font-weight:600; font-size:56px; letter-spacing:.02em; }
+.entry-head-text { display:flex; flex-direction:column; gap:10px; text-align:left; min-width:0; }
+.entry-head-text .eyebrow { margin:0; }
+.entry-head-text h1 { margin:0; font-size:clamp(30px,4.4vw,46px); line-height:1.08; }
+.entry-head-text .role { color:var(--teal); font-weight:600; font-size:clamp(15px,2vw,18px); margin:0; }
+.page-hero.entry-hero { text-align:left; padding-bottom:clamp(40px,6vw,56px); }
+.page-hero.entry-hero .section-inner { max-width:1200px; margin:0 auto; }
+
+.entry-body { text-align:left; }
+.entry-body p { text-align:left; margin:0 0 16px; max-width:none; }
+.entry-body p:last-child { margin-bottom:0; }
+.entry-grid { display:grid; grid-template-columns:1fr 340px; gap:56px; align-items:start; }
+
+.detail-card { text-align:left; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:28px 32px; margin-bottom:22px; box-shadow:0 6px 20px rgba(14,42,63,.06); }
+.detail-card:last-child { margin-bottom:0; }
+.detail-card h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--terracotta); margin:0 0 16px; font-family:'Public Sans',Arial,sans-serif; font-weight:700; }
+
+/* dl of optional practice-detail fields. Rows are only ever emitted for
+   fields the record actually has, so a record with one field renders a
+   one-row dl rather than an awkward mostly-empty table. */
+.detail-row { display:grid; grid-template-columns:minmax(120px,auto) 1fr; gap:0 14px; font-size:15px; }
+.detail-row dt { color:var(--ink); font-weight:700; grid-column:1; padding:9px 0; border-bottom:1px solid var(--line); }
+.detail-row dd { margin:0; grid-column:2; color:var(--ink); padding:9px 0; border-bottom:1px solid var(--line); }
+.detail-row dt:last-of-type, .detail-row dd:last-of-type { border-bottom:none; padding-bottom:0; }
+.detail-card ul.plain { margin:0; padding-left:18px; font-size:15px; color:var(--ink); }
+.detail-card ul.plain li { margin-bottom:6px; }
+.detail-card ul.plain li:last-child { margin-bottom:0; }
+.detail-card .chip-row { justify-content:flex-start; margin:0; }
+
+/* Side column: a distinct sand-toned panel marks it as the "do something
+   with this record" utility block, vs. the paper cards holding data. */
+.entry-actions { background:var(--sand); border-color:var(--line); display:flex; flex-direction:column; gap:12px; }
+.entry-actions h3 { color:var(--ink); }
+.entry-actions .btn, .entry-actions .btn-outline { text-align:center; }
+
+.entry-source { font-size:13px; color:#7a8a94; margin-top:20px; }
+.entry-source a { color:var(--terracotta); font-weight:600; text-decoration:none; }
+.entry-source a:hover { text-decoration:underline; }
+
+@media(max-width:900px){
+  .entry-grid { grid-template-columns:1fr; gap:16px; }
+}
+@media(max-width:600px){
+  .entry-head { flex-direction:column; align-items:flex-start; gap:20px; }
+  .entry-photo { width:120px; height:120px; }
+  .entry-avatar { font-size:38px; }
+  .detail-card { padding:22px; }
+}

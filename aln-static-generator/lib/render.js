@@ -78,10 +78,26 @@ ${rowsHtml}
 `;
 }
 
-// Curated individuals page - fixed field order matching ALN's own popup
-// template, not a generic field dump. Every section is always present (even
-// blank) to match that template's structure; only the image and CV are
-// conditional, since not every record has one.
+// Turns a name into up to 2 uppercase initials, for the avatar shown in
+// place of a profile photo (e.g. "Amara Ndlovu" -> "AN").
+function initialsFromName(name) {
+  return String(name)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+}
+
+// Individuals detail page - matches the Individual.dc.html template
+// designed in Claude Design (project fdb15054-19cf-432e-b9f1-acd5267d2613),
+// implemented here with plain string templating instead of that project's
+// dc-runtime (x-dc/sc-if/sc-for), which is design-canvas-only tooling and
+// doesn't ship. Every section is conditional on the record actually having
+// that data - unlike the old scaffold, a section with nothing to show is
+// omitted rather than rendered blank.
 function renderIndividualPage({
   name,
   professionalStatus,
@@ -97,8 +113,6 @@ function renderIndividualPage({
   profileImageWidth,
   profileImageHeight,
   cvUrl,
-  cvName,
-  objectid,
   mapUrl,
 }) {
   const jsonLd = {
@@ -113,21 +127,32 @@ function renderIndividualPage({
     profileImageWidth && profileImageHeight
       ? ` width="${profileImageWidth}" height="${profileImageHeight}"`
       : '';
-  const imageHtml = profileImageUrl
-    ? `  <img src="${escapeHtml(profileImageUrl)}" alt="${escapeHtml(name)}"${imageDims} style="max-width:320px;width:100%;height:auto;margin:0.5rem 0;">\n`
-    : '';
+  const photoHtml = profileImageUrl
+    ? `<img src="${escapeHtml(profileImageUrl)}" alt="${escapeHtml(name)}"${imageDims}>`
+    : `<div class="entry-avatar">${escapeHtml(initialsFromName(name))}</div>`;
 
-  const institutionsHtml = institutions.length
-    ? institutions.map((line) => escapeHtml(line)).join('<br>')
-    : '';
+  const practiceRows = [
+    ['Country of practice', countryOfPractice],
+    ['Nationality', nationality],
+    ['Tertiary qualifications', tertiaryQualifications],
+    ['Language proficiency', languages],
+  ].filter(([, value]) => value);
 
-  const biographyLinkHtml = biographyLink
-    ? `<a href="${escapeHtml(biographyLink)}">${escapeHtml(biographyLink)}</a>`
-    : '';
+  const practiceRowsHtml = practiceRows
+    .map(([label, value]) => `        <dt>${escapeHtml(label)}</dt>\n        <dd>${escapeHtml(value)}</dd>`)
+    .join('\n');
 
-  const cvHtml = cvUrl
-    ? `  <p><strong>CV:</strong><br><a href="${escapeHtml(cvUrl)}">${escapeHtml(cvName || 'Download CV')}</a></p>\n`
-    : '';
+  const sectors = String(sectorsOfWork || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const sectorsHtml = sectors.map((s) => `          <span class="chip">${escapeHtml(s)}</span>`).join('\n');
+
+  const institutionsHtml = institutions
+    .map((line) => `          <li>${escapeHtml(line)}</li>`)
+    .join('\n');
+
+  const aboutHtml = about ? renderMultilineText(about) : '';
 
   return `<!doctype html>
 <html lang="en">
@@ -136,22 +161,142 @@ function renderIndividualPage({
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(name)} — African Landscape Network</title>
 <meta name="description" content="${escapeHtml(about)}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 </head>
 <body>
-<article>
-  <h1>${escapeHtml(name)}</h1>
-${imageHtml}  <p><strong>${escapeHtml(professionalStatus)}</strong></p>
-${renderMultilineText(about)}
-  <p>${escapeHtml(countryOfPractice)}</p>
-  <p>${escapeHtml(tertiaryQualifications)}</p>
-  <p><strong>Nationality:</strong> ${escapeHtml(nationality)}</p>
-  <p><strong>Language proficiency:</strong><br>${escapeHtml(languages)}</p>
-  <p><strong>Sectors of work:</strong><br>${escapeHtml(sectorsOfWork)}</p>
-  <p><strong>Member of other institutions:</strong><br>${institutionsHtml}</p>
-  <p><strong>Biography link:</strong><br>${biographyLinkHtml}</p>
-${cvHtml}  <p><a href="${escapeHtml(mapUrl)}">View on map (objectid ${objectid}) →</a></p>
-</article>
+
+  <div class="site-v2">
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/index.html" class="brand">
+        <span class="brand-mark">ALN</span>
+        <span class="brand-name">African Landscape Network</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/index.html#individuals">Individuals &amp; Entities</a>
+        <a href="/index.html#projects">Projects Map</a>
+        <a href="/filters.html">Filters</a>
+        <a href="/about.html">About</a>
+        <a href="/individuals/" class="active">Individuals (static)</a>
+        <a href="/projects/">Projects (static)</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-top">
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/index.html#individuals">Individuals &amp; Entities Map</a>
+      <a href="/index.html#projects">Projects Map</a>
+      <a href="/filters.html">Filters</a>
+      <a href="/about.html">About</a>
+      <a href="/individuals/" class="active">Individuals (static)</a>
+      <a href="/projects/">Projects (static)</a>
+    </nav>
+  </div>
+
+  <div class="page-hero entry-hero">
+    <div class="section-inner">
+      <div class="entry-head">
+        <div class="entry-photo">${photoHtml}</div>
+        <div class="entry-head-text">
+          <p class="eyebrow">Individuals &amp; Entities</p>
+          <h1>${escapeHtml(name)}</h1>
+${professionalStatus ? `          <p class="role">${escapeHtml(professionalStatus)}</p>\n` : ''}        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section entry-body" id="profile">
+    <div class="section-inner">
+      <div class="entry-grid">
+
+        <div>
+${aboutHtml ? `          <div class="detail-card">
+            <h3>About</h3>
+${aboutHtml}
+          </div>\n` : ''}${practiceRows.length ? `          <div class="detail-card">
+            <h3>Practice details</h3>
+            <dl class="detail-row">
+${practiceRowsHtml}
+            </dl>
+          </div>\n` : ''}${sectors.length ? `          <div class="detail-card">
+            <h3>Sectors of work</h3>
+            <div class="chip-row">
+${sectorsHtml}
+            </div>
+          </div>\n` : ''}${institutions.length ? `          <div class="detail-card">
+            <h3>Member of other institutions</h3>
+            <ul class="plain">
+${institutionsHtml}
+            </ul>
+          </div>\n` : ''}${biographyLink ? `          <p class="entry-source">Extended biography: <a href="${escapeHtml(biographyLink)}" target="_blank" rel="noopener">${escapeHtml(biographyLink)}</a></p>\n` : ''}
+        </div>
+
+        <aside>
+          <div class="detail-card entry-actions">
+            <h3>This profile</h3>
+${cvUrl ? `            <a class="btn-outline" href="${escapeHtml(cvUrl)}">Download CV</a>\n` : ''}            <a class="btn" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">View on Interactive Map</a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">ALN</span>
+        <p>A platform connecting landscape-focused individuals, entities and projects across Africa.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Navigate</p>
+        <a href="/index.html">Home</a>
+        <a href="/index.html#individuals">Individuals &amp; Entities Map</a>
+        <a href="/index.html#projects">Projects Map</a>
+        <a href="/filters.html">Filters</a>
+        <a href="/about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>
+        <p class="footer-orgs">IFLA &middot; IFLA Africa &middot; ICOMOS &middot; ICOMOS&ndash;ISCCL &middot; UNESCO</p>
+      </div>
+    </div>
+    <div class="site-footer-bottom">African Landscape Network</div>
+  </footer>
+
+  </div>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('menuBtn');
+      var panel = document.getElementById('mobileNav');
+      var closeBtn = document.getElementById('mobileNavClose');
+      function openMenu(){ panel.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      function closeMenu(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      Array.prototype.slice.call(panel.querySelectorAll('a')).forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      var mq = window.matchMedia('(min-width:1100px)');
+      mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
+    })();
+  </script>
+
 </body>
 </html>
 `;
