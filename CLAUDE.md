@@ -7,10 +7,10 @@ https://storymaps.arcgis.com/stories/c2dbf452f2ab42949c5d518c15701ba8
 The goal is a standalone static site with better SEO and design control, hosted on Netlify.
 
 ## Current state
-- `index.html` at project root, linking `css/style.css`
+- Three hand-written pages at project root, each linking `css/style.css`: `index.html` (landing page), `about.html` (background/vision info), `filters.html` (map filter guide)
 - All images live in `images/`
 - `netlify.toml` configures the site for Netlify (publish root, cache headers for `images/` and `css/`)
-- No build tools, no frameworks — plain HTML, CSS, JavaScript
+- No build tools, no frameworks — plain HTML, CSS, JavaScript (nav/footer markup is duplicated across the three pages by hand, not templated)
 - Google Fonts loaded via CDN (Barlow + Barlow Condensed)
 
 Note: two image files originally had uppercase `.JPG` extensions while `index.html` referenced them in lowercase (`.jpg`). This worked on Windows (case-insensitive filesystem) but would have 404'd on Netlify's case-sensitive filesystem. Both files were renamed to lowercase `.jpg` during the reorg.
@@ -24,20 +24,23 @@ Note: two image files originally had uppercase `.JPG` extensions while `index.ht
 - Ink (body headings): #16324a
 - Sand (alternate section background, `iteration/freereign` on): #f3e9da
 
-## Page structure (top to bottom)
-1. Hero — full-bleed photo with a dark gradient overlay and the title/subtitle/date positioned over the bottom of the image (single `.hero` block, not a separate banner)
-2. Sticky navigation bar (ALN Vision / African Landscape Convention / Individuals & Entities Map / Projects Map / Credits) — highlights the section currently in view (scrollspy)
+## Page structure
+As of 2026-08-11 the original single-page StoryMap layout was split into three pages so the landing page stays focused on the two maps. Background/reference content moved out, per the user's request to simplify the landing page — no section copy was changed, only where it lives.
+
+**`index.html`** (top to bottom):
+1. Hero — full-bleed photo with a dark gradient overlay and the title/subtitle positioned over the bottom of the image (single `.hero` block, not a separate banner)
+2. Sticky navigation bar (Home / Individuals & Entities Map / Projects Map / Filters / About) — highlights the in-page section currently in view (scrollspy); Filters and About are cross-page links so they're excluded from the scrollspy targets
 3. Intro text + two CTA buttons (Individuals & Entities Map / Projects Map)
 4. Image carousel (10 landscape photos, 2 visible at a time on desktop, prev/next + dot navigation, hover caption from each image's alt text)
-5. ALN Vision section (diagram + text, two-column)
-6. African Landscape Convention section (book cover + text, two-column)
-7. Individuals & Entities Map section (text + buttons + live ArcGIS map embed)
-8. Projects Map section (text + buttons + live ArcGIS map embed)
-9. Filters section (6 filter categories, each with image pairs and explanatory text)
-10. Credits section (table of organisations + disclaimer)
-11. Footer
+5. Individuals & Entities Map section (text + buttons + live ArcGIS map embed) — marker `01`
+6. Projects Map section (text + buttons + live ArcGIS map embed) — marker `02`
+7. Footer, with quick links to Filters and About
 
-Sections alternate between the paper (`--paper`) and sand (`--sand`) backgrounds for visual rhythm, and each carries a faint decorative section number (01–06) — this is styling only, no section content/copy was changed to add it.
+**`about.html`** — background info moved off the landing page: a `.page-head` banner, then ALN Vision (`01`, diagram + text two-column), African Landscape Convention (`02`, book cover + text two-column), Credits (`03`, org table + disclaimer), footer.
+
+**`filters.html`** — the filter explainer moved off the landing page: a `.page-head` banner, then the single Filters section (`01`: 6 filter categories, each with image pairs and explanatory text), footer.
+
+Sections alternate between the paper (`--paper`) and sand (`--sand`) backgrounds for visual rhythm within each page, and each carries a faint decorative section number, restarting per page — this is styling only, no section content/copy was changed to add it. The nav and footer markup is duplicated by hand on all three pages (no templating); keep them in sync when editing one.
 
 ## Images
 All images currently in the root folder alongside index.html.

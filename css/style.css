@@ -45,6 +45,14 @@ a { color:inherit; }
 .hero-inner .date { color:#b7c3ca; font-size:15px; margin:0; }
 @media(max-width:700px){ .hero-image { height:56vh; min-height:380px; } }
 
+/* ── Page head (sub-pages: About, Filters — a lightweight hero without the photo) ── */
+.page-head { background:var(--navy); padding:56px 40px 46px; text-align:center; }
+.page-head h1 { color:var(--terracotta); font-weight:700; font-size:clamp(32px, 5vw, 48px); line-height:1.05; margin:0 0 14px; text-transform:uppercase; letter-spacing:.02em; }
+.page-head p { color:#dfe6ea; font-size:17px; font-weight:400; max-width:640px; margin:0 auto; }
+.page-jump { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:26px; }
+.page-jump a { color:var(--light-text); font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; text-decoration:none; padding:8px 18px; border:1px solid rgba(255,255,255,.22); border-radius:20px; transition:color .15s, border-color .15s; }
+.page-jump a:hover { color:var(--teal); border-color:var(--teal); }
+
 /* ── Intro ── */
 .intro { background:var(--navy); padding:30px 40px 60px; }
 .intro-inner { max-width:1200px; margin:0 auto; text-align:center; }
@@ -99,6 +107,8 @@ a { color:inherit; }
 .section p { font-size:17px; margin:0 auto 18px; max-width:760px; text-align:justify; }
 .section p em { font-style:italic; }
 .caption { font-size:13px; color:#7a8a94; margin-top:8px; }
+.caption a { color:var(--terracotta); font-weight:600; text-decoration:none; }
+.caption a:hover { text-decoration:underline; }
 
 /* ── Section numeral markers ── */
 .marker { display:block; font-family:'Barlow Condensed',Arial,sans-serif; font-size:56px; font-weight:700; color:var(--terracotta); opacity:.28; line-height:1; margin-bottom:-4px; letter-spacing:.02em; }
@@ -152,3 +162,6 @@ a { color:inherit; }
 @media(max-width:800px){ .disclaimer { grid-template-columns:1fr; } }
 
 footer.foot { background:var(--navy); color:#8fa0aa; text-align:center; padding:26px; font-size:13px; border-top:1px solid rgba(255,255,255,.08); }
+.foot-links { display:flex; gap:24px; justify-content:center; margin-bottom:12px; }
+.foot-links a { color:var(--light-text); font-size:14px; font-weight:500; text-decoration:none; }
+.foot-links a:hover { color:var(--teal); }
