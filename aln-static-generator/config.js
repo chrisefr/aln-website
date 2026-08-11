@@ -181,14 +181,30 @@ module.exports = {
   },
 
   // Attachment "keywords" (Survey123's tag for which question an attachment
-  // came from) allowed onto the public page. Everything else - e.g. the CV PDF
-  // seen on the individuals layer (keyword "biography") - is fetched so we know
-  // it exists, but not linked/rendered, by default.
+  // came from) allowed onto the public page, for layers where any given
+  // record can legitimately have several images (projects). Individuals only
+  // ever has one profile photo/CV each, so that layer uses
+  // individualAttachmentKeywords below instead - see buildIndividualsLayer()
+  // in build.js.
+  publicAttachmentKeywords: {
+    projects: ['project_cover_images_and_graphi'],
+  },
+
+  // Individuals-layer attachment keywords recognized as the profile photo /
+  // CV, checked by buildIndividualsLayer() in build.js.
   // "biography" (the CV) was originally excluded by default as a PII surface
   // - the user explicitly asked to include it on 2026-08-10, so it's allowed
   // through now. Revisit if that changes.
-  publicAttachmentKeywords: {
-    individuals: ['profile_image', 'biography'],
-    projects: ['project_cover_images_and_graphi'],
+  // "certificate" added 2026-08-11 after an audit of every individuals
+  // attachment found 24 of 66 records' CVs (filenames confirm they're
+  // genuine CVs/resumes, e.g. "Curriculum Vitae_Loice Atieno Ouma.pdf") were
+  // tagged "certificate" rather than "biography" - an older or alternate
+  // Survey123 question label for the same upload - and were being silently
+  // dropped since only "biography" was recognized. (Separately, a record
+  // with neither keyword still gets a fallback if it has exactly one
+  // untagged image/PDF - see build.js.)
+  individualAttachmentKeywords: {
+    profileImage: ['profile_image'],
+    cv: ['biography', 'certificate'],
   },
 };
