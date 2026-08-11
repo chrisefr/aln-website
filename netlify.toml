@@ -18,6 +18,12 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
+  # Always revalidate CSS with the server instead of caching it blindly for a
+  # year (unlike images/*, style.css changes often during active development
+  # and isn't versioned/renamed on change - immutable caching meant edits
+  # wouldn't show up in a browser that had already visited the site).
+  # "no-cache" still lets the browser cache the file; it just forces a quick
+  # conditional request (fast 304 if unchanged) before using the cached copy.
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "no-cache"
