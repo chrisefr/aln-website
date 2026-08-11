@@ -5,116 +5,197 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Filters &mdash; African Landscape Network</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- STICKY NAV -->
-  <nav class="nav">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#individuals">Individuals &amp; Entities Map</a></li>
-      <li><a href="index.html#projects">Projects Map</a></li>
-      <li><a href="filters.html" class="active">Filter Guide</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
+  <div class="site-v2">
 
-  <!-- PAGE HEAD -->
-  <div class="page-head">
-    <h1>Filters</h1>
-    <p>Use these filter categories to narrow your search on the Individuals &amp; Entities and Projects maps.</p>
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">ALN</span>
+        <span class="brand-name">African Landscape Network</span>
+      </a>
+
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#individuals">Individuals &amp; Entities</a>
+        <a href="index.html#projects">Projects Map</a>
+        <a href="filters.html" class="active">Filters</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-top">
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#individuals">Individuals &amp; Entities Map</a>
+      <a href="index.html#projects">Projects Map</a>
+      <a href="filters.html" class="active">Filters</a>
+      <a href="about.html">About</a>
+    </nav>
   </div>
 
-  <!-- FILTERS -->
-  <section class="section alt" id="filters">
-    <div class="section-inner">
-      <span class="marker">01</span>
-      <p class="eyebrow">Filters</p>
-      <h2>Focus your search by applying filters:</h2>
-      <ol class="filter-list">
-        <li>Landscape Field</li>
-        <li>Project Focus</li>
-        <li>Landscape Context</li>
-        <li>Formal Recognition</li>
-        <li>Initiated or funded by</li>
-        <li>Country</li>
-      </ol>
+  <!-- HERO -->
+  <div class="page-hero">
+    <p class="eyebrow">Refine your search</p>
+    <h1>Filters</h1>
+    <p>Six categories help narrow both the Individuals &amp; Entities Map and the Projects Map to what&rsquo;s relevant to you.</p>
+  </div>
 
-      <div class="filter-block">
-        <h3>1. Landscape Field</h3>
+  <!-- CATEGORY CHIP STRIP -->
+  <div class="chip-strip">
+    <div class="chip-row">
+      <span class="chip">1. Landscape Field</span>
+      <span class="chip">2. Project Focus</span>
+      <span class="chip">3. Landscape Context</span>
+      <span class="chip">4. Formal Recognition</span>
+      <span class="chip">5. Initiated / Funded By</span>
+      <span class="chip">6. Country</span>
+    </div>
+  </div>
+
+  <!-- FILTER CARDS -->
+  <section class="section" id="filters">
+    <div class="section-inner" style="max-width:1000px;">
+
+      <div class="filter-card">
+        <div class="filter-card-head">
+          <span class="num-sm">01</span>
+          <h2>Landscape Field</h2>
+        </div>
         <ul><li>World Heritage Site</li><li>Landscape Project</li></ul>
-        <div class="img-pair">
+        <div class="filter-images">
           <img src="images/Image Stone Town harbour, Zanzibar (World Heritage).jpg" alt="Stone Town harbour, Zanzibar — World Heritage Site">
           <img src="images/Image Johannesburg urban park (Landscape Project).jpg" alt="Johannesburg urban park — Landscape Project">
         </div>
-        <p class="caption">Landscape Field: World Heritage Site or Landscape Project</p>
+        <p class="caption">World Heritage Site or Landscape Project</p>
       </div>
 
-      <div class="filter-block">
-        <h3>2. Project Focus</h3>
+      <div class="filter-card">
+        <div class="filter-card-head">
+          <span class="num-sm">02</span>
+          <h2>Project Focus</h2>
+        </div>
         <ul><li>Research</li><li>Assessment</li><li>Design</li><li>Management</li></ul>
-        <div class="img-quad">
+        <div class="filter-images">
           <img src="images/Image ruins &amp; stone walls (Research).jpg" alt="Ruins and stone walls — Research">
           <img src="images/wetland at sunrise (Assessment).jpg" alt="Wetland at sunrise — Assessment">
           <img src="images/Image coastal cliffs Cape Point (Design).jpg" alt="Coastal cliffs, Cape Point — Design">
           <img src="images/Image park visitors on stone path (Management).jpg" alt="Park visitors on stone path — Management">
         </div>
-        <p class="caption">Project Focus: Research, Assessment, Design, Management</p>
+        <p class="caption">Research, Assessment, Design, Management</p>
       </div>
 
-      <div class="filter-block">
-        <h3>3. Landscape Context</h3>
-        <ul><li>Urban</li><li>Rural/Elsewhere</li></ul>
-        <div class="img-pair">
+      <div class="filter-card">
+        <div class="filter-card-head">
+          <span class="num-sm">03</span>
+          <h2>Landscape Context</h2>
+        </div>
+        <ul><li>Urban</li><li>Rural / Elsewhere</li></ul>
+        <div class="filter-images">
           <img src="images/Image town below mountain (Urban).jpg" alt="Town below mountain — Urban">
           <img src="images/Image coastal rock pools installation (Rural).jpg" alt="Coastal rock pools installation — Rural">
         </div>
-        <p class="caption">Landscape Context: Urban or Rural</p>
+        <p class="caption">Urban or Rural</p>
       </div>
 
-      <div class="filter-block">
-        <h3>4. Formal Recognition</h3>
-        <ul><li>Designation as World Heritage Site</li><li>Awards</li></ul>
-        <div class="img-pair">
-          <img src="images/Image Stone Town harbour, Zanzibar (World Heritage).jpg" alt="Stone Town harbour — World Heritage Designation">
+      <div class="filter-card">
+        <div class="filter-card-head">
+          <span class="num-sm">04</span>
+          <h2>Formal Recognition</h2>
+        </div>
+        <ul><li>World Heritage designation</li><li>Awards</li></ul>
+        <div class="filter-images">
+          <img src="images/Image Stone Town harbour, Zanzibar (World Heritage).jpg" alt="Stone Town harbour — World Heritage designation">
           <img src="images/Image stone circle water feature (Award-winning design).jpg" alt="Stone circle water feature — Award-winning design">
         </div>
-        <p class="caption">Formal Recognition: World Heritage Designation or Awards</p>
+        <p class="caption">World Heritage designation or Awards</p>
       </div>
 
-      <div class="filter-block">
-        <h3>5. Initiated or Funded by</h3>
+      <div class="filter-card">
+        <div class="filter-card-head">
+          <span class="num-sm">05</span>
+          <h2>Initiated / Funded By</h2>
+        </div>
         <ul>
           <li>Academic</li><li>Community</li><li>Government</li><li>Institutional</li>
           <li>NGO</li><li>Parastatal</li><li>Private</li>
         </ul>
       </div>
 
-      <p style="margin-top:30px;"><strong>Need to work on the details in a template before submitting your project?</strong></p>
-      <div class="btn-row"><a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1z_WYFqqq4urv3B9D-dVUlJVI3OBxhMki" target="_blank" rel="noopener">Word Template (Project)</a></div>
-      <p>Access the Word template by clicking on the above button. Send it around between colleagues to collect all the relevant information. Once the form has been completed submit the project by:</p>
-      <p>1. Entering the info through the online survey above, or by 2. emailing the form to <a href="mailto:aln@iflaworld.org" style="color:var(--terracotta);font-weight:600;text-decoration:none;">aln@iflaworld.org</a></p>
+      <div class="callout">
+        <h2>Submitting a project?</h2>
+        <p>Use the Word template to gather all the details with colleagues before submitting online.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1z_WYFqqq4urv3B9D-dVUlJVI3OBxhMki" target="_blank" rel="noopener">Word Template (Project)</a>
+        </div>
+        <p>Once complete, submit the project by entering the info through the <a href="https://survey123.arcgis.com/share/ca089f9bad964482a7fc0b9afe4b6a27" target="_blank" rel="noopener">online survey</a>, or by emailing the form to <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>.</p>
+      </div>
+
     </div>
   </section>
 
-  <footer class="foot">
-    <div class="foot-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#individuals">Individuals Map</a>
-      <a href="index.html#projects">Projects Map</a>
-      <a href="about.html">About the ALN</a>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">ALN</span>
+        <p>A platform connecting landscape-focused individuals, entities and projects across Africa.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Navigate</p>
+        <a href="index.html">Home</a>
+        <a href="index.html#individuals">Individuals &amp; Entities Map</a>
+        <a href="index.html#projects">Projects Map</a>
+        <a href="filters.html">Filters</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>
+        <p class="footer-orgs">IFLA &middot; IFLA Africa &middot; ICOMOS &middot; ICOMOS&ndash;ISCCL &middot; UNESCO</p>
+      </div>
     </div>
-    African Landscape Network &mdash; local preview build
+    <div class="site-footer-bottom">African Landscape Network &mdash; local preview build</div>
   </footer>
+
+  </div>
 
   <script>
     (function(){
-      // Wrap filter/pair images so the hover zoom clips cleanly per-image.
-      Array.prototype.slice.call(document.querySelectorAll('.img-pair img, .img-quad img')).forEach(function(img){
+      // Sticky-header mobile menu: hamburger opens a full-screen overlay nav.
+      var btn = document.getElementById('menuBtn');
+      var panel = document.getElementById('mobileNav');
+      var closeBtn = document.getElementById('mobileNavClose');
+      function openMenu(){ panel.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      function closeMenu(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      Array.prototype.slice.call(panel.querySelectorAll('a')).forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      var mq = window.matchMedia('(min-width:900px)');
+      mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
+    })();
+
+    (function(){
+      // Wrap filter-card images so the hover zoom clips cleanly per-image.
+      Array.prototype.slice.call(document.querySelectorAll('.filter-images img')).forEach(function(img){
         var wrap = document.createElement('span');
-        wrap.className = 'thumb';
+        wrap.className = 'thumb-v2';
         img.parentNode.insertBefore(wrap, img);
         wrap.appendChild(img);
       });
@@ -124,7 +205,7 @@
       // Scroll-reveal: only runs when the visitor hasn't asked for reduced motion.
       var motionOK = window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches;
       if (!motionOK || !('IntersectionObserver' in window)) return;
-      var targets = Array.prototype.slice.call(document.querySelectorAll('.filter-block'));
+      var targets = Array.prototype.slice.call(document.querySelectorAll('.filter-card'));
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if (!entry.isIntersecting) return;

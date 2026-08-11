@@ -5,31 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About &mdash; African Landscape Network</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- STICKY NAV -->
-  <nav class="nav">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#individuals">Individuals &amp; Entities Map</a></li>
-      <li><a href="index.html#projects">Projects Map</a></li>
-      <li><a href="filters.html">Filter Guide</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-    </ul>
-  </nav>
+  <div class="site-v2">
 
-  <!-- PAGE HEAD -->
-  <div class="page-head">
-    <h1>About the ALN</h1>
-    <p>The vision behind the Network, the Convention that grounds it, and the organisations who made it possible.</p>
-    <div class="page-jump">
-      <a href="#vision">Vision</a>
-      <a href="#convention">Convention</a>
-      <a href="#credits">Credits</a>
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">ALN</span>
+        <span class="brand-name">African Landscape Network</span>
+      </a>
+
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#individuals">Individuals &amp; Entities</a>
+        <a href="index.html#projects">Projects Map</a>
+        <a href="filters.html">Filters</a>
+        <a href="about.html" class="active">About</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </header>
+
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-top">
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#individuals">Individuals &amp; Entities Map</a>
+      <a href="index.html#projects">Projects Map</a>
+      <a href="filters.html">Filters</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <p class="eyebrow">About the Network</p>
+    <h1>Vision, foundations &amp; credits</h1>
+    <p>The African Landscape Network (ALN) is an online map based interface that features a landscape focussed <strong>Network of Individuals, Entities and Projects</strong> across the African continent.</p>
   </div>
 
   <!-- ALN VISION -->
@@ -41,7 +64,7 @@
           <p class="caption">ALN vision/process diagram for the seed project</p>
         </div>
         <div>
-          <span class="marker">01</span>
+          <span class="num">01</span>
           <h2>ALN Vision</h2>
           <p>The African Landscape Network (ALN) seeks to encourage the adoption of the African Landscape Convention by connecting <em>organisations</em>, individuals and professionals working on landscape programmes, projects and <em>issues</em> in Africa.</p>
           <p><em>Italics</em> demarcate the next phase of the ALN project. The current phase (seed project) is limited to professionals/individuals and projects. The next phase of the project will aim to include organisations into the network.</p>
@@ -61,11 +84,14 @@
           <p class="caption">African Landscape Convention</p>
         </div>
         <div>
-          <span class="marker">02</span>
+          <span class="num">02</span>
           <h2>African Landscape Convention</h2>
-          <p>The African Landscape Convention is a tool used by professionals, and academics to teach future leaders when working with landscapes of all scales. The convention was drafted by <a href="https://www.ajlajournal.org/blog/ifla-africa-a-historical-perspective" target="_blank" rel="noopener">IFLA Africa</a> &mdash; <em>International Federation for Landscape Architects in Africa</em>.</p>
+          <p>The African Landscape Convention is a tool used by professionals and academics to teach future leaders when working with landscapes of all scales. The convention was drafted by <a href="https://www.ajlajournal.org/blog/ifla-africa-a-historical-perspective" target="_blank" rel="noopener">IFLA Africa</a> &mdash; <em>International Federation for Landscape Architects in Africa</em>.</p>
           <p>IFLA Africa&rsquo;s vision is that the principles and values contained in the convention be applied and shared through a matrix of professionals, individuals, <em>firms or organisations</em>, i.e. landscape architects, engineers, geographers, conservationists, planners, urban designers, ecologists, etc.</p>
-          <p>The Network is the platform through which this matrix connects and shares work. The structure through which these connections will be made is an online (web-based) map. The map indicates the location and details of various professionals, individuals, <em>firms and organisations</em>; serve as a database of their work and; be a repository for best practise and case studies.</p>
+          <p>The Network is the platform through which this matrix connects and shares work. The structure through which these connections will be made is an online (web-based) map. The map indicates the location and details of various professionals, individuals, <em>firms and organisations</em>; serves as a database of their work; and is a repository for best practice and case studies.</p>
+          <div class="btn-row left">
+            <a class="btn" href="https://uploads-ssl.webflow.com/600dc3be5a4c457994b319ba/60131cf6c35acd1c2ec9b9c0_IFLA%20ALC.pdf" target="_blank" rel="noopener">Read the Convention (PDF)</a>
+          </div>
         </div>
       </div>
     </div>
@@ -74,9 +100,9 @@
   <!-- CREDITS -->
   <section class="section credits" id="credits">
     <div class="section-inner">
-      <span class="marker">03</span>
+      <span class="num">03</span>
       <h2>Credits</h2>
-      <p>The ALN came into being through seed funding from UNESCO, and a collaborative between IFLA and ICOMOS. Its concept was guided by an advisory committee made up of IFLA Africa and ICOMOS members.</p>
+      <p style="text-align:center;">The ALN came into being through seed funding from UNESCO, and a collaboration between IFLA and ICOMOS. Its concept was guided by an advisory committee made up of IFLA Africa and ICOMOS members.</p>
       <table>
         <tr><td>IFLA</td><td>International Federation for Landscape Architects</td></tr>
         <tr><td>IFLA Africa</td><td>International Federation for Landscape Architects in Africa</td></tr>
@@ -85,7 +111,7 @@
         <tr><td>UNESCO</td><td>United Nations Educational, Scientific and Cultural Organisation</td></tr>
       </table>
       <div class="contact">
-        <p><strong>Contact the ALN for any comments or queries</strong><br>
+        <p style="text-align:center;"><strong>Contact the ALN for any comments or queries</strong><br>
         <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a></p>
       </div>
       <div class="disclaimer">
@@ -102,17 +128,50 @@
     </div>
   </section>
 
-  <footer class="foot">
-    <div class="foot-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#individuals">Individuals Map</a>
-      <a href="index.html#projects">Projects Map</a>
-      <a href="filters.html">Filter Guide</a>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">ALN</span>
+        <p>A platform connecting landscape-focused individuals, entities and projects across Africa.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Navigate</p>
+        <a href="index.html">Home</a>
+        <a href="index.html#individuals">Individuals &amp; Entities Map</a>
+        <a href="index.html#projects">Projects Map</a>
+        <a href="filters.html">Filters</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>
+        <p class="footer-orgs">IFLA &middot; IFLA Africa &middot; ICOMOS &middot; ICOMOS&ndash;ISCCL &middot; UNESCO</p>
+      </div>
     </div>
-    African Landscape Network &mdash; local preview build
+    <div class="site-footer-bottom">African Landscape Network &mdash; local preview build</div>
   </footer>
 
+  </div>
+
   <script>
+    (function(){
+      // Sticky-header mobile menu: hamburger opens a full-screen overlay nav.
+      var btn = document.getElementById('menuBtn');
+      var panel = document.getElementById('mobileNav');
+      var closeBtn = document.getElementById('mobileNavClose');
+      function openMenu(){ panel.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      function closeMenu(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      Array.prototype.slice.call(panel.querySelectorAll('a')).forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      // If the viewport grows past the mobile breakpoint while open, close it.
+      var mq = window.matchMedia('(min-width:900px)');
+      mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
+    })();
+
     (function(){
       // Scroll-reveal: only runs when the visitor hasn't asked for reduced motion.
       var motionOK = window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches;

@@ -5,39 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>African Landscape Network</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <div class="site-v2">
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">ALN</span>
+        <span class="brand-name">African Landscape Network</span>
+      </a>
+
+      <nav class="site-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="#individuals">Individuals &amp; Entities</a>
+        <a href="#projects">Projects Map</a>
+        <a href="filters.html">Filters</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-top">
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="#individuals">Individuals &amp; Entities Map</a>
+      <a href="#projects">Projects Map</a>
+      <a href="filters.html">Filters</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
 
   <!-- HERO -->
   <div class="hero">
     <img class="hero-image" src="images/Image Bo-Kaap colourful street, Cape Town (hero photo).jpg" alt="Bo-Kaap colourful street, Cape Town">
     <div class="hero-inner">
-      <h1>African Landscape<br>Network</h1>
-      <p class="subtitle">A platform for collaboration</p>
-    </div>
-  </div>
-
-  <!-- STICKY NAV -->
-  <nav class="nav">
-    <ul>
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="#individuals">Individuals &amp; Entities Map</a></li>
-      <li><a href="#projects">Projects Map</a></li>
-      <li><a href="filters.html">Filter Guide</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-
-  <!-- INTRO STATEMENT -->
-  <div class="intro">
-    <div class="intro-inner">
-      <p>The African Landscape Network (ALN) is an online map based interface that features a landscape focussed <strong>Network of Individuals, Entities and Projects</strong> across the African continent.</p>
-      <div class="btn-row">
-        <a class="btn" href="#individuals">Individuals &amp; Entities Map</a>
-        <a class="btn" href="#projects">Projects Map</a>
-      </div>
+      <h1>African Landscape Network</h1>
+      <p class="subtitle">A network of landscape professionals, entities and projects across the African continent</p>
     </div>
   </div>
 
@@ -63,71 +79,104 @@
   <!-- INDIVIDUALS & ENTITIES MAP -->
   <section class="section" id="individuals">
     <div class="section-inner">
-      <span class="marker">01</span>
-      <h2>Individuals &amp; Entities Map</h2>
-      <p>Browse through the interactive map, and image gallery to search for professionals in Africa!</p>
-      <p>Expect to find a list of individuals, from various professional backgrounds working in Africa.</p>
-      <p>The Network of Individuals features professions that are delineated by the ICOMOS-ISCCL <em>International Federation for Monuments and Sites&rsquo; Scientific Committee on Cultural Landscapes</em>, and IFLA <em>International Federation for Landscape Architects</em>.</p>
-      <p>The gallery view of thumbnail images will adjust as one scrolls through the continent. Hover over a person&rsquo;s thumbnail image to find their geographic location. A short introductory paragraph to each member will appear when thumbnail image or dot is selected.</p>
-      <div class="btn-row">
-        <a class="btn" href="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=8f15771ddec4489bb617ff34c8d2d4a8" target="_blank" rel="noopener">Enter Individuals Map</a>
-        <a class="btn" href="https://arcg.is/15er8u" target="_blank" rel="noopener">Add Yourself to Map</a>
+      <div class="section-head">
+        <span class="num">01</span>
+        <p class="eyebrow">The Network</p>
+        <h2>Individuals &amp; Entities Map</h2>
+        <p>A searchable directory of landscape architects, conservationists and organisations working across Africa &mdash; delineated by IFLA and ICOMOS&ndash;ISCCL professional categories.</p>
       </div>
-      <p style="margin-top:20px;">Click on the button to add yourself to the Network of Individuals in Africa!</p>
-      <p>By filling out the online survey you will be able to add all your details to produce a profile on the Individuals Map.</p>
-      <div class="map-frame">
+
+      <div class="map-panel">
+        <div class="map-panel-label">Live map &mdash; Individuals &amp; Entities</div>
         <iframe
-          class="map-viewer"
           title="Individuals and Entities interactive map and thumbnail gallery"
           src="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=8f15771ddec4489bb617ff34c8d2d4a8"
-          width="100%"
-          height="750px"
-          frameborder="0"
           allowfullscreen>
         </iframe>
       </div>
-      <p class="caption">Network of Individuals &amp; Entities</p>
-      <p class="caption"><a href="filters.html">Looking to narrow your search? See the available map filters &rarr;</a></p>
+
+      <div class="btn-row">
+        <a class="btn" href="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=8f15771ddec4489bb617ff34c8d2d4a8" target="_blank" rel="noopener">Enter Individuals Map</a>
+        <a class="btn-outline" href="https://arcg.is/15er8u" target="_blank" rel="noopener">Add Yourself to the Map</a>
+      </div>
+
+      <div class="chip-block" style="margin-top:44px;">
+        <p class="chip-label">Filter the directory by</p>
+        <div class="chip-row">
+          <span class="chip">Landscape Field</span>
+          <span class="chip">Formal Recognition</span>
+          <span class="chip">Initiated / Funded By</span>
+          <span class="chip">Country</span>
+        </div>
+        <p style="margin-top:16px;"><a class="text-link" href="filters.html">See what each filter means &rarr;</a></p>
+      </div>
     </div>
   </section>
 
   <!-- PROJECTS MAP -->
   <section class="section alt" id="projects">
     <div class="section-inner">
-      <span class="marker">02</span>
-      <h2>Projects Map</h2>
-      <p>Browse through the interactive map, to gain access to a repository of work for best practice, and insightful case studies in Africa! Expect to find a map with projects focussed or implemented in Africa.</p>
-      <p>The projects map is made up of the various project entries by the individuals that feature on the individuals map. The variety of professions allow a range of projects to be hosted on the projects map. Scroll through the legend layers above to get a sense of the type of projects included, and the way you will be able to guide your attention to specific details.</p>
-      <p>Search for projects by switching the layers of interest (one at a time) on and off. Get an overview of these by activating the legend (three-lined icon). Each project has a short write-up with links to more information, and a set of images that accompanies each project.</p>
-      <div class="btn-row">
-        <a class="btn" href="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=a4f122053f98481e88d0d8c218b2148e" target="_blank" rel="noopener">Enter Projects Map</a>
-        <a class="btn" href="https://survey123.arcgis.com/share/ca089f9bad964482a7fc0b9afe4b6a27" target="_blank" rel="noopener">Enter a Project to This Map</a>
+      <div class="section-head">
+        <span class="num">02</span>
+        <p class="eyebrow">The Work</p>
+        <h2>Projects Map</h2>
+        <p>A repository of landscape case studies and best practice from across the continent, submitted by members of the Individuals &amp; Entities network.</p>
       </div>
-      <p style="margin-top:20px;">Click on the button to add a project/case study to this map!</p>
-      <p>By filling out the online survey you will be able to add all the details of the project to produce a case study to be featured on the map.</p>
-      <div class="map-frame">
+
+      <div class="map-panel">
+        <div class="map-panel-label">Live map &mdash; Projects</div>
         <iframe
-          class="map-viewer"
           title="Projects Map interactive viewer"
           src="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=a4f122053f98481e88d0d8c218b2148e"
-          width="100%"
-          height="750px"
-          frameborder="0"
           allowfullscreen>
         </iframe>
       </div>
-      <p class="caption">Interactive Projects Viewer</p>
-      <p class="caption"><a href="filters.html">Looking to narrow your search? See the available map filters &rarr;</a></p>
+
+      <div class="btn-row">
+        <a class="btn" href="https://ifla-aln.maps.arcgis.com/apps/instant/attachmentviewer/index.html?appid=a4f122053f98481e88d0d8c218b2148e" target="_blank" rel="noopener">Enter Projects Map</a>
+        <a class="btn-outline" href="https://survey123.arcgis.com/share/ca089f9bad964482a7fc0b9afe4b6a27" target="_blank" rel="noopener">Add a Project</a>
+      </div>
+
+      <div class="chip-block" style="margin-top:44px;">
+        <p class="chip-label">Filter the repository by</p>
+        <div class="chip-row">
+          <span class="chip">Landscape Field</span>
+          <span class="chip">Project Focus</span>
+          <span class="chip">Landscape Context</span>
+          <span class="chip">Formal Recognition</span>
+          <span class="chip">Initiated / Funded By</span>
+          <span class="chip">Country</span>
+        </div>
+        <p style="margin-top:16px;"><a class="text-link" href="filters.html">See what each filter means &rarr;</a></p>
+      </div>
     </div>
   </section>
 
-  <footer class="foot">
-    <div class="foot-links">
-      <a href="filters.html">Filter Guide</a>
-      <a href="about.html">About the ALN</a>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">ALN</span>
+        <p>A platform connecting landscape-focused individuals, entities and projects across Africa.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Navigate</p>
+        <a href="index.html">Home</a>
+        <a href="#individuals">Individuals &amp; Entities Map</a>
+        <a href="#projects">Projects Map</a>
+        <a href="filters.html">Filters</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>
+        <p class="footer-orgs">IFLA &middot; IFLA Africa &middot; ICOMOS &middot; ICOMOS&ndash;ISCCL &middot; UNESCO</p>
+      </div>
     </div>
-    African Landscape Network &mdash; local preview build
+    <div class="site-footer-bottom">African Landscape Network &mdash; local preview build</div>
   </footer>
+
+  </div>
 
   <script>
     (function(){
@@ -177,33 +226,51 @@
     })();
 
     (function(){
-      // Scrollspy: highlight the nav link for the in-page section in view.
-      // Only anchor links (href starting with "#") point at sections on
-      // this page — Filters/About are separate pages and are left alone.
-      // "Home" is highlighted whenever no section is in view yet (i.e. the
-      // visitor is above the first section: hero/intro/carousel).
+      // Sticky-header mobile menu: hamburger opens a full-screen overlay nav.
+      var btn = document.getElementById('menuBtn');
+      var panel = document.getElementById('mobileNav');
+      var closeBtn = document.getElementById('mobileNavClose');
+      function openMenu(){ panel.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      function closeMenu(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      Array.prototype.slice.call(panel.querySelectorAll('a')).forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      var mq = window.matchMedia('(min-width:900px)');
+      mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
+    })();
+
+    (function(){
+      // Scrollspy: highlight the nav link (desktop + mobile copies) for the
+      // in-page section currently in view. Only anchor links (href starting
+      // with "#") point at sections on this page — Filters/About are
+      // separate pages and are left alone. "Home" is highlighted whenever
+      // no section is in view yet (i.e. above the first section).
       if (!('IntersectionObserver' in window)) return;
-      var homeLink = document.querySelector('.nav a[href="index.html"]');
-      var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a')).filter(function(a){
-        return a.getAttribute('href').charAt(0) === '#';
+      var allNavLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a, .mobile-nav-links a'));
+      var sectionHrefs = [];
+      allNavLinks.forEach(function(a){
+        var href = a.getAttribute('href');
+        if (href.charAt(0) === '#' && sectionHrefs.indexOf(href) === -1) sectionHrefs.push(href);
       });
-      var sections = navLinks.map(function(a){
-        return document.querySelector(a.getAttribute('href'));
-      });
+      var sections = sectionHrefs.map(function(h){ return document.querySelector(h); });
+
+      function setActive(href){
+        allNavLinks.forEach(function(a){
+          var match = href === null ? a.getAttribute('href') === 'index.html' : a.getAttribute('href') === href;
+          a.classList.toggle('active', match);
+        });
+      }
+
       var spy = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          var idx = sections.indexOf(entry.target);
-          if (idx === -1) return;
+          var href = '#' + entry.target.id;
           if (!entry.isIntersecting) {
-            // Leaving the first section upward (scrolled back above it) — fall back to Home.
-            if (idx === 0 && entry.boundingClientRect.top > 0 && homeLink) {
-              document.querySelectorAll('.nav a').forEach(function(l){ l.classList.remove('active'); });
-              homeLink.classList.add('active');
-            }
+            if (sectionHrefs[0] === href && entry.boundingClientRect.top > 0) setActive(null);
             return;
           }
-          document.querySelectorAll('.nav a').forEach(function(l){ l.classList.remove('active'); });
-          navLinks[idx].classList.add('active');
+          setActive(href);
         });
       }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
       sections.forEach(function(s){ if (s) spy.observe(s); });
