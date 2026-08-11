@@ -116,11 +116,12 @@ async function buildIndividualsLayer() {
       const untaggedImages = attachmentsRaw.filter((a) => !a.keywords && (a.contentType || '').startsWith('image/'));
       const untaggedPdfs = attachmentsRaw.filter((a) => !a.keywords && a.contentType === 'application/pdf');
 
+      const { profileImage: profileImageKeywords, cv: cvKeywords } = config.individualAttachmentKeywords;
       const image =
-        attachmentsRaw.find((a) => a.keywords === 'profile_image') ||
+        attachmentsRaw.find((a) => profileImageKeywords.includes(a.keywords)) ||
         (untaggedImages.length === 1 ? untaggedImages[0] : null);
       const cv =
-        attachmentsRaw.find((a) => a.keywords === 'biography') ||
+        attachmentsRaw.find((a) => cvKeywords.includes(a.keywords)) ||
         (untaggedPdfs.length === 1 ? untaggedPdfs[0] : null);
 
       if (image) {
@@ -241,7 +242,21 @@ async function buildProjectsLayer() {
     let attachments = [];
     try {
       const attachmentsRaw = await fetchAttachments(featureServerUrl, objectid);
-      const imageAttachments = attachmentsRaw.filter((a) => allowedKeywords.has(a.keywords));
+      // Audited 2026-08-11: 8 of 44 projects (35 photos total, 4 of them
+      // left with an entirely empty gallery) have real cover photos that
+      // came through with keywords: "" instead of
+      // "project_cover_images_and_graphi" and were being silently dropped by
+      // a strict keyword match. Unlike the individuals layer's single
+      // profile photo/CV, a project's gallery already expects multiple
+      // images, so there's no "which one is it" ambiguity to resolve here -
+      // any untagged image attachment is included alongside the tagged
+      // ones. Still content-type gated so the one stray untagged PDF seen on
+      // this layer doesn't get treated as a gallery image.
+      const imageAttachments = attachmentsRaw.filter(
+        (a) =>
+          allowedKeywords.has(a.keywords) ||
+          (!a.keywords && (a.contentType || '').startsWith('image/'))
+      );
 
       const results = await Promise.all(
         imageAttachments.map(async (a) => {
