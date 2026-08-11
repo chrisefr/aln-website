@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filters &mdash; African Landscape Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- STICKY NAV -->
+  <nav class="nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#individuals">Individuals &amp; Entities Map</a></li>
+      <li><a href="index.html#projects">Projects Map</a></li>
+      <li><a href="filters.html" class="active">Filter Guide</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEAD -->
+  <div class="page-head">
+    <h1>Filters</h1>
+    <p>Use these filter categories to narrow your search on the Individuals &amp; Entities and Projects maps.</p>
+  </div>
+
+  <!-- FILTERS -->
+  <section class="section alt" id="filters">
+    <div class="section-inner">
+      <span class="marker">01</span>
+      <p class="eyebrow">Filters</p>
+      <h2>Focus your search by applying filters:</h2>
+      <ol class="filter-list">
+        <li>Landscape Field</li>
+        <li>Project Focus</li>
+        <li>Landscape Context</li>
+        <li>Formal Recognition</li>
+        <li>Initiated or funded by</li>
+        <li>Country</li>
+      </ol>
+
+      <div class="filter-block">
+        <h3>1. Landscape Field</h3>
+        <ul><li>World Heritage Site</li><li>Landscape Project</li></ul>
+        <div class="img-pair">
+          <img src="images/Image Stone Town harbour, Zanzibar (World Heritage).jpg" alt="Stone Town harbour, Zanzibar — World Heritage Site">
+          <img src="images/Image Johannesburg urban park (Landscape Project).jpg" alt="Johannesburg urban park — Landscape Project">
+        </div>
+        <p class="caption">Landscape Field: World Heritage Site or Landscape Project</p>
+      </div>
+
+      <div class="filter-block">
+        <h3>2. Project Focus</h3>
+        <ul><li>Research</li><li>Assessment</li><li>Design</li><li>Management</li></ul>
+        <div class="img-quad">
+          <img src="images/Image ruins &amp; stone walls (Research).jpg" alt="Ruins and stone walls — Research">
+          <img src="images/wetland at sunrise (Assessment).jpg" alt="Wetland at sunrise — Assessment">
+          <img src="images/Image coastal cliffs Cape Point (Design).jpg" alt="Coastal cliffs, Cape Point — Design">
+          <img src="images/Image park visitors on stone path (Management).jpg" alt="Park visitors on stone path — Management">
+        </div>
+        <p class="caption">Project Focus: Research, Assessment, Design, Management</p>
+      </div>
+
+      <div class="filter-block">
+        <h3>3. Landscape Context</h3>
+        <ul><li>Urban</li><li>Rural/Elsewhere</li></ul>
+        <div class="img-pair">
+          <img src="images/Image town below mountain (Urban).jpg" alt="Town below mountain — Urban">
+          <img src="images/Image coastal rock pools installation (Rural).jpg" alt="Coastal rock pools installation — Rural">
+        </div>
+        <p class="caption">Landscape Context: Urban or Rural</p>
+      </div>
+
+      <div class="filter-block">
+        <h3>4. Formal Recognition</h3>
+        <ul><li>Designation as World Heritage Site</li><li>Awards</li></ul>
+        <div class="img-pair">
+          <img src="images/Image Stone Town harbour, Zanzibar (World Heritage).jpg" alt="Stone Town harbour — World Heritage Designation">
+          <img src="images/Image stone circle water feature (Award-winning design).jpg" alt="Stone circle water feature — Award-winning design">
+        </div>
+        <p class="caption">Formal Recognition: World Heritage Designation or Awards</p>
+      </div>
+
+      <div class="filter-block">
+        <h3>5. Initiated or Funded by</h3>
+        <ul>
+          <li>Academic</li><li>Community</li><li>Government</li><li>Institutional</li>
+          <li>NGO</li><li>Parastatal</li><li>Private</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:30px;"><strong>Need to work on the details in a template before submitting your project?</strong></p>
+      <div class="btn-row"><a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1z_WYFqqq4urv3B9D-dVUlJVI3OBxhMki" target="_blank" rel="noopener">Word Template (Project)</a></div>
+      <p>Access the Word template by clicking on the above button. Send it around between colleagues to collect all the relevant information. Once the form has been completed submit the project by:</p>
+      <p>1. Entering the info through the online survey above, or by 2. emailing the form to <a href="mailto:aln@iflaworld.org" style="color:var(--terracotta);font-weight:600;text-decoration:none;">aln@iflaworld.org</a></p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#individuals">Individuals Map</a>
+      <a href="index.html#projects">Projects Map</a>
+      <a href="about.html">About the ALN</a>
+    </div>
+    African Landscape Network &mdash; local preview build
+  </footer>
+
+  <script>
+    (function(){
+      // Wrap filter/pair images so the hover zoom clips cleanly per-image.
+      Array.prototype.slice.call(document.querySelectorAll('.img-pair img, .img-quad img')).forEach(function(img){
+        var wrap = document.createElement('span');
+        wrap.className = 'thumb';
+        img.parentNode.insertBefore(wrap, img);
+        wrap.appendChild(img);
+      });
+    })();
+
+    (function(){
+      // Scroll-reveal: only runs when the visitor hasn't asked for reduced motion.
+      var motionOK = window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      if (!motionOK || !('IntersectionObserver' in window)) return;
+      var targets = Array.prototype.slice.call(document.querySelectorAll('.filter-block'));
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+      targets.forEach(function(el){
+        el.classList.add('reveal');
+        io.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
