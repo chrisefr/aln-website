@@ -302,21 +302,43 @@ ${cvUrl ? `            <a class="btn-outline" href="${escapeHtml(cvUrl)}">Downlo
 `;
 }
 
-// Turns a '\n'-joined list (e.g. from buildNewlineList in lib/transform.js)
-// into <br>-separated HTML.
-function linesToHtml(str) {
+// Turns a buildNewlineList() result (lines already '\n'-joined, ALC principle
+// lines already carrying a leading "- ") into <li> items for a plain list -
+// stripping that leading "- " so it isn't shown twice alongside the real
+// <ul> bullet.
+function newlineListToLis(str) {
   return String(str)
     .split('\n')
+    .map((line) => line.replace(/^- /, '').trim())
     .filter(Boolean)
-    .map((line) => escapeHtml(line))
-    .join('<br>');
+    .map((line) => `          <li>${escapeHtml(line)}</li>`)
+    .join('\n');
 }
 
-// Curated projects page - mirrors ALN's own Arcade-driven popup template
-// exactly (see buildProjectProfile in lib/transform.js for where each value
-// comes from and which Arcade expression it reproduces). Every section is
-// always present (even blank) to match that template's structure; images are
-// conditional since not every record has one.
+// Splits a comma-joined string (e.g. focusText, landscapeApplication) into
+// chip spans - works fine for a single value too (renders as one chip).
+function commaListToChips(str) {
+  return String(str || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => `          <span class="chip">${escapeHtml(s)}</span>`)
+    .join('\n');
+}
+
+// Projects detail page. Field values themselves mirror ALN's own
+// Arcade-driven popup template exactly (see buildProjectProfile in
+// lib/transform.js for where each one comes from and which Arcade
+// expression it reproduces) - only the presentation here departs from that
+// popup's plain paragraph dump, reusing the same card-based layout as
+// renderIndividualPage() so the two detail-page types read as one family.
+// Every card is conditional on the record actually having that data.
+//
+// Map provision: no live ArcGIS embed yet - `.map-placeholder` below is a
+// deliberate stand-in slot (kept in the DOM with the record's mapUrl/
+// objectid already wired up) for whenever an embeddable map component is
+// ready to drop in. Until then it just links out to the interactive map,
+// same as the individuals template does.
 function renderProjectPage({
   name,
   areaText,
@@ -353,23 +375,46 @@ function renderProjectPage({
     description,
   };
 
-  const attachmentsHtml = attachments.length
-    ? `  <section>
-    <h2>Images</h2>
-${attachments
-  .map((a) => {
-    const dims = a.width && a.height ? ` width="${a.width}" height="${a.height}"` : '';
-    return `    <img src="${escapeHtml(a.url)}" alt="${escapeHtml(name)}"${dims} style="max-width:100%;height:auto;margin:0.5rem 0;">`;
-  })
-  .join('\n')}
-  </section>\n`
+  const statusBits = [statusText, completionYear ? String(completionYear) : '', projectBudget].filter(Boolean);
+
+  const detailRows = [
+    ['Project status', statusBits.length ? statusBits.join(' · ') : ''],
+    ['Area', areaText],
+    ['Boundary', boundaryStatus ? `${boundaryStatus}${boundarySuffix || ''}` : ''],
+    ['Initiated / funded by', initiatedBy ? `${initiatedBy} entity` : ''],
+    ['Client', nameOfClient],
+    ['Designed / assessed by', designedBy && entityName ? `${entityName} (${designedBy})` : entityName || designedBy],
+  ].filter(([, value]) => value);
+  const detailRowsHtml = detailRows
+    .map(([label, value]) => `        <dt>${escapeHtml(label)}</dt>\n        <dd>${escapeHtml(value)}</dd>`)
+    .join('\n');
+
+  const focusChips = commaListToChips(focusText);
+  const applicationChips = commaListToChips(landscapeApplication);
+
+  const alcLis = newlineListToLis(alcList);
+  const sdgLis = newlineListToLis(sdgList);
+
+  const recognitionLinkHtml = recognitionLink
+    ? `\n            <p class="entry-source"><a href="${escapeHtml(recognitionLink)}" target="_blank" rel="noopener">${escapeHtml(recognitionLink)}</a></p>`
     : '';
 
   const relevantLinkHtml = relevantLink
-    ? `<a href="${escapeHtml(relevantLink)}">${escapeHtml(relevantLink)}</a>`
+    ? `\n            <p class="entry-source">Related link: <a href="${escapeHtml(relevantLink)}" target="_blank" rel="noopener">${escapeHtml(relevantLink)}</a></p>`
     : '';
-  const recognitionLinkHtml = recognitionLink
-    ? `<a href="${escapeHtml(recognitionLink)}">${escapeHtml(recognitionLink)}</a>`
+
+  const galleryHtml = attachments.length
+    ? `          <div class="detail-card">
+            <h3>Images</h3>
+            <div class="project-gallery">
+${attachments
+  .map((a) => {
+    const dims = a.width && a.height ? ` width="${a.width}" height="${a.height}"` : '';
+    return `              <img src="${escapeHtml(a.url)}" alt="${escapeHtml(name)}"${dims} loading="lazy">`;
+  })
+  .join('\n')}
+            </div>
+${imagesReference ? `            <p class="entry-source">${escapeHtml(imagesReference)}</p>\n` : ''}          </div>\n`
     : '';
 
   return `<!doctype html>
@@ -379,26 +424,153 @@ ${attachments
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(name)} — African Landscape Network</title>
 <meta name="description" content="${escapeHtml(description)}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 </head>
 <body>
-<article>
-  <h1>${escapeHtml(name)}</h1>
-  <p>The area of the project is: <strong>${escapeHtml(areaText)}</strong>, and the boundary drawn is <strong>${escapeHtml(boundaryStatus)}</strong>${escapeHtml(boundarySuffix)}</p>
-  <p><strong>Synopsis: </strong>${escapeHtml(synopsis)}<br>${relevantLinkHtml}</p>
-  <p><strong>Project status:</strong> ${escapeHtml(statusText)} ${escapeHtml(String(completionYear))}  ${escapeHtml(projectBudget)}</p>
-  <p><strong>Project focus:</strong> ${escapeHtml(focusText)}<br><strong>Landscape application:</strong> ${escapeHtml(landscapeApplication)}</p>
-  <p><strong>Initiated or funded by:</strong> ${escapeHtml(initiatedBy)} entity<br><strong>Name of client:</strong> ${escapeHtml(nameOfClient)}</p>
-  <p><strong>Designed/ created/ assessed by ${escapeHtml(designedBy)}: </strong>${escapeHtml(entityName)}</p>
-  <p><strong>The project supports the following ALC principles:</strong><br>${linesToHtml(alcList)}</p>
-  <p><strong>Summary of ALC principles that is supported within the project: </strong><br>${escapeHtml(alcSummary)}</p>
-  <p><strong>The project supports the following SDG principles:</strong><br>${linesToHtml(sdgList)}</p>
-  <p><strong>Summary of SDG principles that is supported within the project: </strong><br>${escapeHtml(sdgSummary)}</p>
-  <p><strong>Formal recognition or designation of project:</strong> ${escapeHtml(recognition)}</p>
-  <p>${escapeHtml(recognitionDetail)} ${recognitionLinkHtml}</p>
-  <p><strong>References to images and graphics:</strong> ${escapeHtml(imagesReference)}</p>
-${attachmentsHtml}  <p><a href="${escapeHtml(mapUrl)}">View on map (objectid ${objectid}) →</a></p>
-</article>
+
+  <div class="site-v2">
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/index.html" class="brand">
+        <span class="brand-mark">ALN</span>
+        <span class="brand-name">African Landscape Network</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/index.html">Home</a>
+        <a href="/index.html#individuals">Individuals &amp; Entities</a>
+        <a href="/index.html#projects">Projects Map</a>
+        <a href="/filters.html">Filters</a>
+        <a href="/about.html">About</a>
+        <a href="/individuals/">Individuals (static)</a>
+        <a href="/projects/" class="active">Projects (static)</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-top">
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/index.html#individuals">Individuals &amp; Entities Map</a>
+      <a href="/index.html#projects">Projects Map</a>
+      <a href="/filters.html">Filters</a>
+      <a href="/about.html">About</a>
+      <a href="/individuals/">Individuals (static)</a>
+      <a href="/projects/" class="active">Projects (static)</a>
+    </nav>
+  </div>
+
+  <div class="page-hero">
+    <p class="eyebrow">Projects</p>
+    <h1>${escapeHtml(name)}</h1>
+${statusBits.length ? `    <p>${escapeHtml(statusBits.join(' · '))}</p>\n` : ''}  </div>
+
+  <section class="section entry-body" id="project">
+    <div class="section-inner">
+      <div class="entry-grid">
+
+        <div>
+${synopsis ? `          <div class="detail-card">
+            <h3>Synopsis</h3>
+${renderMultilineText(synopsis)}${relevantLinkHtml}
+          </div>\n` : ''}${detailRows.length ? `          <div class="detail-card">
+            <h3>Project details</h3>
+            <dl class="detail-row">
+${detailRowsHtml}
+            </dl>
+          </div>\n` : ''}${focusChips || applicationChips ? `          <div class="detail-card">
+${focusChips ? `            <h3>Project focus</h3>
+            <div class="chip-row">
+${focusChips}
+            </div>\n` : ''}${applicationChips ? `${focusChips ? '            <h3 style="margin-top:20px;">' : '            <h3>'}Landscape application</h3>
+            <div class="chip-row">
+${applicationChips}
+            </div>\n` : ''}          </div>\n` : ''}${alcLis || alcSummary ? `          <div class="detail-card">
+            <h3>ALC principles supported</h3>
+${alcLis ? `            <ul class="plain">
+${alcLis}
+            </ul>\n` : ''}${alcSummary ? renderMultilineText(alcSummary) : ''}
+          </div>\n` : ''}${sdgLis || sdgSummary ? `          <div class="detail-card">
+            <h3>SDGs supported</h3>
+${sdgLis ? `            <ul class="plain">
+${sdgLis}
+            </ul>\n` : ''}${sdgSummary ? renderMultilineText(sdgSummary) : ''}
+          </div>\n` : ''}${recognition || recognitionDetail ? `          <div class="detail-card">
+            <h3>Formal recognition</h3>
+            <p>${escapeHtml([recognition, recognitionDetail].filter(Boolean).join(' — '))}</p>${recognitionLinkHtml}
+          </div>\n` : ''}${galleryHtml}
+        </div>
+
+        <aside>
+          <div class="detail-card entry-actions">
+            <h3>This project</h3>
+            <a class="btn" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">View on Interactive Map</a>
+          </div>
+
+          <!-- Map provision: swap this placeholder for an embedded ArcGIS
+               map/viewer once one is ready. mapUrl/objectid are already
+               wired up for it. -->
+          <div class="detail-card map-placeholder" data-objectid="${escapeHtml(String(objectid))}" data-map-url="${escapeHtml(mapUrl)}">
+            <h3>Location</h3>
+            <p>Interactive map embed coming soon.<br>Use “View on Interactive Map” above in the meantime.</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">ALN</span>
+        <p>A platform connecting landscape-focused individuals, entities and projects across Africa.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Navigate</p>
+        <a href="/index.html">Home</a>
+        <a href="/index.html#individuals">Individuals &amp; Entities Map</a>
+        <a href="/index.html#projects">Projects Map</a>
+        <a href="/filters.html">Filters</a>
+        <a href="/about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-heading">Contact</p>
+        <a href="mailto:aln@iflaworld.org">aln@iflaworld.org</a>
+        <p class="footer-orgs">IFLA &middot; IFLA Africa &middot; ICOMOS &middot; ICOMOS&ndash;ISCCL &middot; UNESCO</p>
+      </div>
+    </div>
+    <div class="site-footer-bottom">African Landscape Network</div>
+  </footer>
+
+  </div>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('menuBtn');
+      var panel = document.getElementById('mobileNav');
+      var closeBtn = document.getElementById('mobileNavClose');
+      function openMenu(){ panel.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      function closeMenu(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      Array.prototype.slice.call(panel.querySelectorAll('a')).forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      var mq = window.matchMedia('(min-width:1100px)');
+      mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
+    })();
+  </script>
+
 </body>
 </html>
 `;

@@ -306,3 +306,24 @@ a { color:inherit; }
   .entry-avatar { font-size:38px; }
   .detail-card { padding:22px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Project entry template - detail page for one Projects Map record,
+   see aln-static-generator's renderProjectPage(). Reuses the same
+   .entry-grid/.detail-card/.entry-actions system as the individuals
+   template above; only what's specific to a project record lives here.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Aside on the project template stacks two cards (actions, then the map
+   provision below) rather than one, so it needs its own gap. */
+.entry-grid > aside { display:flex; flex-direction:column; gap:22px; }
+
+.project-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+.project-gallery img { width:100%; height:110px; object-fit:cover; border-radius:8px; display:block; }
+
+/* Stand-in for a future embedded ArcGIS map/viewer - see the comment above
+   this block in renderProjectPage(). Deliberately styled as an obvious
+   placeholder (dashed border, muted tone) rather than a fake map image. */
+.map-placeholder { background:var(--sand); border:1px dashed var(--line); text-align:center; }
+.map-placeholder h3 { color:var(--ink); }
+.map-placeholder p { font-size:14px; color:#5c6f79; margin:0; }
