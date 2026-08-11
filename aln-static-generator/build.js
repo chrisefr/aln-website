@@ -104,8 +104,24 @@ async function buildIndividualsLayer() {
     let cvName = null;
     try {
       const attachmentsRaw = await fetchAttachments(featureServerUrl, objectid);
-      const image = attachmentsRaw.find((a) => a.keywords === 'profile_image');
-      const cv = attachmentsRaw.find((a) => a.keywords === 'biography');
+      // A handful of individuals records (older Survey123 submissions,
+      // confirmed 2026-08-11 - e.g. objectid 6, Olivia Nthoi-Molefe) predate
+      // ALN tagging attachments with a "keywords" value at all, so their
+      // photo/CV attachments come back with keywords: "" and would otherwise
+      // be silently dropped by the strict tag match below. Fall back to the
+      // sole image/PDF attachment only when it's unambiguous (exactly one
+      // untagged candidate) - with 2+ untagged images/PDFs on a record we
+      // can't guess which one is the profile photo/CV, so leave it unset
+      // rather than risk picking the wrong file.
+      const untaggedImages = attachmentsRaw.filter((a) => !a.keywords && (a.contentType || '').startsWith('image/'));
+      const untaggedPdfs = attachmentsRaw.filter((a) => !a.keywords && a.contentType === 'application/pdf');
+
+      const image =
+        attachmentsRaw.find((a) => a.keywords === 'profile_image') ||
+        (untaggedImages.length === 1 ? untaggedImages[0] : null);
+      const cv =
+        attachmentsRaw.find((a) => a.keywords === 'biography') ||
+        (untaggedPdfs.length === 1 ? untaggedPdfs[0] : null);
 
       if (image) {
         const rawUrl = `${featureServerUrl}/0/${objectid}/attachments/${image.id}`;
