@@ -403,18 +403,111 @@ function renderProjectPage({
     ? `\n            <p class="entry-source">Related link: <a href="${escapeHtml(relevantLink)}" target="_blank" rel="noopener">${escapeHtml(relevantLink)}</a></p>`
     : '';
 
-  const galleryHtml = attachments.length
-    ? `          <div class="detail-card">
-            <h3>Images</h3>
-            <div class="project-gallery">
-${attachments
-  .map((a) => {
-    const dims = a.width && a.height ? ` width="${a.width}" height="${a.height}"` : '';
-    return `              <img src="${escapeHtml(a.url)}" alt="${escapeHtml(name)}"${dims} loading="lazy">`;
-  })
-  .join('\n')}
-            </div>
-${imagesReference ? `            <p class="entry-source">${escapeHtml(imagesReference)}</p>\n` : ''}          </div>\n`
+  // Gallery lives as a full-width carousel directly under the page-hero,
+  // ahead of the entry-grid detail cards (Claude Design revision, project
+  // fdb15054-19cf-432e-b9f1-acd5267d2613: photos should read as one of the
+  // first things on the page, not a small card near the bottom). Reuses
+  // the site's shared .carousel/.carousel-track/.carousel-slide/
+  // .carousel-nav/.carousel-dots markup (see index.html's own carousel)
+  // verbatim - .project-photo-carousel just widens/heightens it. Nav
+  // arrows and dots only render with more than one photo; the whole
+  // section is omitted with none.
+  const gallerySlidesHtml = attachments
+    .map((a) => {
+      const dims = a.width && a.height ? ` width="${a.width}" height="${a.height}"` : '';
+      return `          <div class="carousel-slide"><img src="${escapeHtml(a.url)}" alt="${escapeHtml(name)}"${dims} loading="lazy"></div>`;
+    })
+    .join('\n');
+
+  const galleryCarouselHtml = attachments.length
+    ? `  <section class="section project-gallery-section" id="project-gallery">
+    <div class="section-inner">
+      <div class="carousel project-photo-carousel" id="projectGalleryCarousel">
+        <div class="carousel-track" id="projectGalleryTrack">
+${gallerySlidesHtml}
+        </div>
+${attachments.length > 1 ? `        <button class="carousel-nav prev" aria-label="Previous photo" onclick="projectGalleryStep(-1)">&lsaquo;</button>
+        <button class="carousel-nav next" aria-label="Next photo" onclick="projectGalleryStep(1)">&rsaquo;</button>
+        <div class="carousel-dots" id="projectGalleryDots"></div>\n` : ''}      </div>
+${imagesReference ? `      <p class="caption">${escapeHtml(imagesReference)}</p>\n` : ''}    </div>
+  </section>
+
+`
+    : '';
+
+  const galleryScript = attachments.length
+    ? `
+  <script>
+    (function(){
+      var track = document.getElementById('projectGalleryTrack');
+      var dotsWrap = document.getElementById('projectGalleryDots');
+      var slides = Array.prototype.slice.call(track.children);
+
+      if (dotsWrap) {
+        slides.forEach(function(_, i){
+          var dot = document.createElement('button');
+          dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+          if (i === 0) dot.classList.add('active');
+          dot.addEventListener('click', function(){
+            slides[i].scrollIntoView({ behavior:'smooth', inline:'start', block:'nearest' });
+          });
+          dotsWrap.appendChild(dot);
+        });
+        var dots = Array.prototype.slice.call(dotsWrap.children);
+        track.addEventListener('scroll', function(){
+          clearTimeout(track._t);
+          track._t = setTimeout(function(){
+            var w = slides[0].getBoundingClientRect().width;
+            var idx = Math.round(track.scrollLeft / w);
+            dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+          }, 80);
+        });
+      }
+
+      window.projectGalleryStep = function(dir){
+        var w = slides[0].getBoundingClientRect().width;
+        track.scrollBy({ left: dir * w, behavior:'smooth' });
+      };
+
+      // Fullscreen lightbox - built lazily on first click, closed via the
+      // X button, clicking the backdrop, or Escape.
+      var lightbox, lightboxImg;
+      function ensureLightbox(){
+        if (lightbox) return;
+        lightbox = document.createElement('div');
+        lightbox.className = 'gallery-lightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.innerHTML = '<button class="gallery-lightbox-close" aria-label="Close photo">&times;</button><img class="gallery-lightbox-img" alt="">';
+        document.body.appendChild(lightbox);
+        lightboxImg = lightbox.querySelector('img');
+        lightbox.addEventListener('click', function(e){ if (e.target === lightbox) closeLightbox(); });
+        lightbox.querySelector('.gallery-lightbox-close').addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', function(e){
+          if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+        });
+      }
+      function openLightbox(src, alt){
+        ensureLightbox();
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.add('open');
+        lightbox.querySelector('.gallery-lightbox-close').focus();
+      }
+      function closeLightbox(){
+        if (lightbox) lightbox.classList.remove('open');
+      }
+
+      slides.forEach(function(slide){
+        slide.addEventListener('click', function(){
+          var img = slide.querySelector('img');
+          if (!img) return;
+          openLightbox(img.src, img.alt || '');
+        });
+      });
+    })();
+  </script>
+`
     : '';
 
   return `<!doctype html>
@@ -474,7 +567,7 @@ ${imagesReference ? `            <p class="entry-source">${escapeHtml(imagesRefe
     <h1>${escapeHtml(name)}</h1>
 ${statusBits.length ? `    <p>${escapeHtml(statusBits.join(' · '))}</p>\n` : ''}  </div>
 
-  <section class="section entry-body" id="project">
+${galleryCarouselHtml}  <section class="section entry-body" id="project">
     <div class="section-inner">
       <div class="entry-grid">
 
@@ -507,7 +600,7 @@ ${sdgLis}
           </div>\n` : ''}${recognition || recognitionDetail ? `          <div class="detail-card">
             <h3>Formal recognition</h3>
             <p>${escapeHtml([recognition, recognitionDetail].filter(Boolean).join(' — '))}</p>${recognitionLinkHtml}
-          </div>\n` : ''}${galleryHtml}
+          </div>\n` : ''}
         </div>
 
         <aside>
@@ -570,7 +663,7 @@ ${sdgLis}
       mq.addEventListener('change', function(e){ if (e.matches) closeMenu(); });
     })();
   </script>
-
+${galleryScript}
 </body>
 </html>
 `;

@@ -318,12 +318,32 @@ a { color:inherit; }
    provision below) rather than one, so it needs its own gap. */
 .entry-grid > aside { display:flex; flex-direction:column; gap:22px; }
 
-.project-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
-.project-gallery img { width:100%; height:110px; object-fit:cover; border-radius:8px; display:block; }
-
 /* Stand-in for a future embedded ArcGIS map/viewer - see the comment above
    this block in renderProjectPage(). Deliberately styled as an obvious
    placeholder (dashed border, muted tone) rather than a fake map image. */
 .map-placeholder { background:var(--sand); border:1px dashed var(--line); text-align:center; }
 .map-placeholder h3 { color:var(--ink); }
 .map-placeholder p { font-size:14px; color:#5c6f79; margin:0; }
+
+/* Project photo gallery - a full-width carousel promoted directly under
+   the page-hero (ahead of the entry-grid detail cards), on the user's
+   call that photos should read as one of the first things on the page,
+   not a small card near the bottom. Reuses the site's shared .carousel/
+   .carousel-track/.carousel-slide/.carousel-nav/.carousel-dots pattern
+   (see the home carousel above) verbatim - .project-photo-carousel just
+   widens/heightens it for a single-project treatment. */
+.project-gallery-section { padding:40px 40px 0; }
+.project-photo-carousel { max-width:1400px; margin:0 auto; }
+.project-photo-carousel .carousel-slide { height:440px; cursor:zoom-in; }
+@media(max-width:900px){ .project-photo-carousel .carousel-slide { height:320px; } }
+@media(max-width:600px){ .project-photo-carousel .carousel-slide { height:240px; } }
+
+/* Fullscreen lightbox opened by clicking a gallery photo. */
+.gallery-lightbox { position:fixed; inset:0; background:rgba(10,20,26,.93); display:flex; align-items:center; justify-content:center; z-index:1000; opacity:0; visibility:hidden; }
+.gallery-lightbox.open { opacity:1; visibility:visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-lightbox { transition:opacity .2s ease; }
+}
+.gallery-lightbox-img { max-width:90vw; max-height:88vh; object-fit:contain; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+.gallery-lightbox-close { position:absolute; top:20px; right:24px; width:44px; height:44px; border-radius:50%; border:none; background:rgba(255,255,255,.12); color:#fff; font-size:24px; line-height:1; cursor:pointer; }
+.gallery-lightbox-close:hover, .gallery-lightbox-close:focus-visible { background:rgba(255,255,255,.24); }
