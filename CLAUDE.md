@@ -64,8 +64,9 @@ The existing maps live on ArcGIS and should remain as link destinations:
 1. ~~Reorganise folder structure (images/ subfolder, css/ subfolder)~~ — done
 2. ~~Set up Netlify deployment (netlify.toml)~~ — done (site can now be dragged into Netlify or connected via Git)
 3. Improve mobile responsiveness
-4. Consider Decap CMS for non-technical content editing by ALN colleagues
-5. Add visitor analytics — likely GoatCounter (free tier, one script tag, no cookie-consent banner needed, not tied to Netlify)
+4. Add visitor analytics — likely GoatCounter (free tier, one script tag, no cookie-consent banner needed, not tied to Netlify)
+
+Decap CMS (non-technical content editing) was considered and declined — Chris is happy to keep making content edits directly in HTML via Claude Code, and Decap would require restructuring the hand-written pages into templated/config-driven content.
 
 ## Hosting
 - Platform: Netlify
