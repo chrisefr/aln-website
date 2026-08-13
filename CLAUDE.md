@@ -65,6 +65,7 @@ The existing maps live on ArcGIS and should remain as link destinations:
 2. ~~Set up Netlify deployment (netlify.toml)~~ — done (site can now be dragged into Netlify or connected via Git)
 3. Improve mobile responsiveness
 4. Consider Decap CMS for non-technical content editing by ALN colleagues
+5. Add visitor analytics — likely GoatCounter (free tier, one script tag, no cookie-consent banner needed, not tied to Netlify)
 
 ## Hosting
 - Platform: Netlify
